@@ -57,6 +57,7 @@ const createDriver = async (req, res, next) => {
       data
     })
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }

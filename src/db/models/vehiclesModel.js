@@ -51,14 +51,53 @@ const VehicleSchema = {
     allowNull: true,
     field: 'last_maintenance'
   },
-  saneamiento: {
+  saneamientoCarnico: {
     type: DataTypes.DATE,
     allowNull: true,
+    field: 'saneamiento_carnico'
+  },
+  saneamientoPesquero: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    field: 'saneamiento_pesquero'
   },
   fumigacion: {
     type: DataTypes.DATE,
     allowNull: true,
-  }
+  },
+  poliza: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  invima: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  tarjetaPropiedad: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'tarjeta_propiedad'
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    field: 'created_at'
+  },
+  createdBy: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'created_by'
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    field: 'updated_at'
+  },
+  UpdatedBy: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'updated_by'
+  },
 };
 
 class Vehicle extends Model {
