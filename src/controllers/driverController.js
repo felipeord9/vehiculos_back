@@ -44,6 +44,23 @@ const findByCedula = async (req, res, next) => {
   }
 }
 
+const findByCo = async (req, res, next) => {
+  try {
+    const { params: { co } } = req
+
+    console.log(co)
+
+    const data = await DriverService.findCo(co)
+
+    res.status(200).json({
+      message: 'OK',
+      data
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 const createDriver = async (req, res, next) => {
   try {
     const { body } = req
@@ -96,6 +113,7 @@ module.exports = {
   findAllDrivers,
   findOneDriver,
   findByCedula,
+  findByCo,
   createDriver,
   updateDriver,
   deleteDriver,

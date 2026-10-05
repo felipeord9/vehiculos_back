@@ -13,6 +13,7 @@ router
   .get('/', VehicleController.findAllVehicles)
   .get('/:id', VehicleController.findOneVehicle)
   .get('/cedula/:cedula', VehicleController.findByCedula)
+  .get('/agencia/:co', VehicleController.findByCo)
   .post('/', checkRoles("admin"), VehicleController.createVehicle)
   .patch('/:id', checkRoles("admin"), VehicleController.updateVehicle)
   .delete('/id/:id', checkRoles("admin"), VehicleController.deleteVehicle)

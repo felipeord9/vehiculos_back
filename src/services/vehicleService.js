@@ -26,6 +26,18 @@ const findBy = async (cedula) => {
   return vehicle;
 };
 
+const findCo = async (co) => {
+  const vehicles = await models.Vehicle.findAll({
+    where: {
+      co
+    }
+  });
+
+  if (!vehicles) throw boom.notFound("vehicles not found");
+
+  return vehicles;
+};
+
 const create = async (body) => {
   const vehicle = await models.Vehicle.create(body);
 
@@ -48,6 +60,7 @@ module.exports = {
   find,
   findOne,
   findBy,
+  findCo,
   create,
   update,
   remove,

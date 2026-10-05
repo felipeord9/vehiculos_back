@@ -44,6 +44,23 @@ const findByCedula = async (req, res, next) => {
   }
 }
 
+const findByCo = async (req, res, next) => {
+  try {
+    const { params: { co } } = req
+
+    console.log(co)
+
+    const data = await VehicleService.findCo(co)
+
+    res.status(200).json({
+      message: 'OK',
+      data
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 const createVehicle = async (req, res, next) => {
   try {
     const { body } = req
@@ -95,6 +112,7 @@ module.exports = {
   findAllVehicles,
   findOneVehicle,
   findByCedula,
+  findByCo,
   createVehicle,
   updateVehicle,
   deleteVehicle,

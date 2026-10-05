@@ -26,6 +26,18 @@ const findBy = async (cedula) => {
   return driver;
 };
 
+const findCo = async (co) => {
+  const drivers = await models.Driver.findAll({
+    where: {
+      co
+    }
+  });
+
+  if (!drivers) throw boom.notFound("Drivers not found");
+
+  return drivers;
+};
+
 const create = async (body) => {
   const driver = await models.Driver.create(body);
 
@@ -48,6 +60,7 @@ module.exports = {
   find,
   findOne,
   findBy,
+  findCo,
   create,
   update,
   remove,
