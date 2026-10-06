@@ -58,9 +58,13 @@ const create = async (data) => {
 }
 
 const update = async (id, changes) => {
+  let hash
+  if(changes.password){
+    hash = bcrypt.hashSync(changes.password,10)
+  }
   const user = await findOne(id)
-  const updatedUser = await user.update(changes)
-
+  const updatedUser = await user.update({...changes,password:hash})
+  delete updatedUser.dataValues.password
   return updatedUser
 }
 
