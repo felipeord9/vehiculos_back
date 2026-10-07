@@ -1218,7 +1218,7 @@ const sendMailNotCondition = async (req, res, next) => {
         from: config.smtpEmail,
         //to: 'sistemas2@granlangostino.net',
         to: 'mant.vehiculos@granlangostino.net, admonfinanciera@granlangostino.com, saludocupacional@granlangostino.com',
-        cc: 'administrador@granlangostino.com',
+        cc: 'administrador@granlangostino.com, coordinador.vehiculos@granlangostino.net',
         subject: "¡LIMITACIÓN DE CONDUCTOR!",
         html: `
         <!DOCTYPE html>
@@ -1452,7 +1452,7 @@ const sendMailNews = async (req, res, next) => {
         from: config.smtpEmail,
         //to: 'sistemas2@granlangostino.net',
         to: 'mant.vehiculos@granlangostino.net, admonfinanciera@granlangostino.com, saludocupacional@granlangostino.com',
-        cc: 'administrador@granlangostino.com',
+        cc: 'administrador@granlangostino.com, coordinador.vehiculos@granlangostino.net',
         subject: "¡NOTIFICACIÓN DE NOVEDADES!",
         html: `
         <!DOCTYPE html>
