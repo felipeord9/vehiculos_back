@@ -2,7 +2,9 @@ const boom = require('@hapi/boom')
 const { models } = require("../libs/sequelize");
 
 const find = async () => {
-  const records = await models.PreOperational.findAll();
+  const records = await models.PreOperational.findAll({
+    order: [["id", "DESC"]],
+  });
   return records;
 };
 

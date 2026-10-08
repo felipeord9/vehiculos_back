@@ -7,6 +7,9 @@ const AuthRoutes = require('./authRoutes')
 const EvidenceRoutes = require('./evidenceRoutes')
 const PreOperationalRoutes = require('./preOperationalRoutes')
 const AgencyRoutes = require('./agencyRoutes')
+const PesvRoutes = require('./pesvRoutes')
+const FilesDriverRoutes = require('./filesDriverRoutes')
+const FilesVehicleRoutes = require('./filesVehicleRoutes')
 
 function routerApi(app) {
     const router = express.Router()
@@ -21,6 +24,9 @@ function routerApi(app) {
     router.use('/upload', EvidenceRoutes)
     router.use('/preoperational', PreOperationalRoutes)
     router.use('/agencies', AgencyRoutes)
+    router.use('/pesv', PesvRoutes)
+    router.use('/files/driver', FilesDriverRoutes)
+    router.use('/files/vehicle', FilesVehicleRoutes)
 
 }
 

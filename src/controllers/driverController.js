@@ -75,6 +75,9 @@ const createDriver = async (req, res, next) => {
     })
   } catch (error) {
     console.log(error)
+    res.status(500).json({
+      message: 'error'
+    })
     next(error)
   }
 }
@@ -82,6 +85,8 @@ const createDriver = async (req, res, next) => {
 const updateDriver =async (req, res, next) => {
   try {
     const { body, params: { id } } = req
+
+    console.log(body)
     const data = await DriverService.update(id, body)
 
     res.status(200).json({
@@ -89,6 +94,7 @@ const updateDriver =async (req, res, next) => {
       data
     })
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }
