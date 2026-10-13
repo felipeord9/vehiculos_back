@@ -20,7 +20,8 @@ const findBy = async (cedula) => {
   const record = await models.PreOperational.findOne({
     where: {
       rowId: cedula
-    }
+    },
+    order: [["id", "DESC"]],
   });
 
   if (!record) throw boom.notFound("PreOperational not found");
@@ -32,7 +33,8 @@ const findByAgency = async (co) => {
   const records = await models.PreOperational.findAll({
     where: {
       co: co
-    }
+    },
+    order: [["id", "DESC"]],
   });
 
   if (!records) throw boom.notFound("record not found");
@@ -44,7 +46,8 @@ const findByUsername = async (username) => {
   const records = await models.PreOperational.findAll({
     where: {
       createdBy: username
-    }
+    },
+    order: [["id", "DESC"]],
   });
 
   if (!records) throw boom.notFound("record not found");
