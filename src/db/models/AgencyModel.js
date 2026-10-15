@@ -21,7 +21,25 @@ const AgencySchema = {
 
 class Agency extends Model {
   static associate(models) {
-    //
+    this.hasMany(models.PreOperational, {
+      as: 'records',
+      foreignKey: 'rowId',
+      sourceKey: 'rowId'
+    });
+
+    //asociacion con drivers
+    this.hasMany(models.Driver, {
+      as: 'coDriver',
+      foreignKey: 'co',
+      sourceKey: 'rowId'
+    });
+
+    //asociacion con vehiculos
+    this.hasMany(models.Vehicle, {
+      as: 'coVehicle',
+      foreignKey: 'co',
+      sourceKey: 'rowId'
+    });
   }
 
   static config(sequelize) {

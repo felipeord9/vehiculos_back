@@ -2,7 +2,11 @@ const boom = require('@hapi/boom')
 const { models } = require("../libs/sequelize");
 
 const find = async () => {
-  const vehicles = await models.Vehicle.findAll();
+  const vehicles = await models.Vehicle.findAll({
+    include: [
+      "coVehicle",
+    ],
+  });
   return vehicles;
 };
 
@@ -18,7 +22,10 @@ const findBy = async (cedula) => {
   const vehicle = await models.Vehicle.findOne({
     where: {
       rowId: cedula
-    }
+    },
+    include: [
+      "coVehicle",
+    ],
   });
 
   if (!vehicle) throw boom.notFound("Vehicle not found");
@@ -30,7 +37,10 @@ const findCo = async (co) => {
   const vehicles = await models.Vehicle.findAll({
     where: {
       co
-    }
+    },
+    include: [
+      "coVehicle",
+    ],
   });
 
   if (!vehicles) throw boom.notFound("vehicles not found");

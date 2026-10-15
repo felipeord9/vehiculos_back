@@ -65,6 +65,11 @@ const DriverSchema = {
 
 class Driver extends Model {
   static associate(models) {
+    this.belongsTo(models.Agency, {
+      as: 'coDriver',
+      foreignKey: 'co',  // Campo en Record
+      targetKey: 'rowId'     // Campo objetivo en Agency
+    });
   }
 
   static config(sequelize) {

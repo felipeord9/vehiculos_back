@@ -102,6 +102,11 @@ const VehicleSchema = {
 
 class Vehicle extends Model {
   static associate(models) {
+    this.belongsTo(models.Agency, {
+      as: 'coVehicle',
+      foreignKey: 'co',  // Campo en Record
+      targetKey: 'rowId'     // Campo objetivo en Agency
+    });
   }
 
   static config(sequelize) {

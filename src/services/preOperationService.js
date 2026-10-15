@@ -4,6 +4,9 @@ const { models } = require("../libs/sequelize");
 const find = async () => {
   const records = await models.PreOperational.findAll({
     order: [["id", "DESC"]],
+    include: [
+      "agency",
+    ],
   });
   return records;
 };
@@ -21,6 +24,9 @@ const findBy = async (cedula) => {
     where: {
       rowId: cedula
     },
+    include: [
+      "agency",
+    ],
     order: [["id", "DESC"]],
   });
 
@@ -34,6 +40,9 @@ const findByAgency = async (co) => {
     where: {
       co: co
     },
+    include: [
+      "agency",
+    ],
     order: [["id", "DESC"]],
   });
 
@@ -47,6 +56,9 @@ const findByUsername = async (username) => {
     where: {
       createdBy: username
     },
+    include: [
+      "agency",
+    ],
     order: [["id", "DESC"]],
   });
 

@@ -230,6 +230,11 @@ const PreOperationalSchema = {
 
 class PreOperational extends Model {
   static associate(models) {
+    this.belongsTo(models.Agency, {
+      as: 'agency',
+      foreignKey: 'co',  // Campo en Record
+      targetKey: 'rowId'     // Campo objetivo en Agency
+    });
   }
 
   static config(sequelize) {

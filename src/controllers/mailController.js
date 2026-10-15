@@ -1,4 +1,5 @@
 const mailService = require("../services/mailService");
+const agencyService = require("../services/agencyService");
 const { config } = require("../config/config");
 const nodemailer = require("nodemailer");
 
@@ -1204,6 +1205,11 @@ const sendMailNotCondition = async (req, res, next) => {
   try {
     const { body } = req;
 
+    var agencia;
+    if(body.co){
+      agencia = await agencyService.findOneByRowId(body.co)
+    }
+
     const transporter = await nodemailer.createTransport({
       host: config.smtpHost,
       port: config.smtpPort,
@@ -1338,7 +1344,7 @@ const sendMailNotCondition = async (req, res, next) => {
                         <br/>
                       <p><strong>ID:</strong> ${body.rowId !== null && body.rowId}</p>
                       <p><strong>Nombre:</strong> ${body.driver !== null && body.driver}</p>
-                      <p><strong>Agencia:</strong> ${body.co !== null && body?.co}</p>
+                      <p><strong>Agencia:</strong> ${agencia ? `${agencia.rowId} - ${agencia.description}` : body.co !== null && body?.co}</p>
                       <p><strong>Resumen de la limitación:</strong> ${body.diagnosis !== null && body?.diagnosis}</p>
                       <p><strong>Fecha creación:</strong> ${new Date(body.createdAt).toLocaleString("es-CO")}</p>
                     </td>
@@ -1436,6 +1442,11 @@ const sendMailNews = async (req, res, next) => {
         `;
       })
       .join('');
+
+    var agencia;
+    if(infoDriver.co){
+      agencia = await agencyService.findOneByRowId(infoDriver.co)
+    }
 
     const transporter = await nodemailer.createTransport({
       host: config.smtpHost,
@@ -1548,7 +1559,7 @@ const sendMailNews = async (req, res, next) => {
                 <br/>
                 <p><strong>ID:</strong> ${infoDriver.rowId || 'N/A'}</p>
                 <p><strong>Nombre:</strong> ${infoDriver.driver || 'N/A'}</p>
-                <p><strong>Agencia / Centro de Operaciones:</strong> ${infoDriver.co || 'N/A'}</p>
+                <p><strong>Agencia / Centro de Operaciones:</strong> ${agencia ? `${agencia.rowId} - ${agencia.description}` : infoDriver.co || 'N/A'}</p>
                 <p><strong>Fecha de reporte:</strong> ${new Date().toLocaleString("es-CO")}</p>
               </div>
 

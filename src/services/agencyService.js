@@ -14,6 +14,19 @@ const findOne = async (id) => {
   return agency;
 };
 
+const findOneByRowId = async (rowId) => {
+  const agency = await models.Agency.findOne({
+    where: {
+      rowId
+    }
+  });
+
+  if (!agency) throw boom.notFound("Agency not found");
+
+  return agency;
+};
+
+
 const findBy = async (cedula) => {
   const agency = await models.Agency.findOne({
     where: {
@@ -47,6 +60,7 @@ const remove = async(id)=>{
 module.exports = {
   find,
   findOne,
+  findOneByRowId,
   findBy,
   create,
   update,

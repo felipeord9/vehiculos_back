@@ -13,6 +13,10 @@ const config = {
     jwtSecret: process.env.JWT_SECRET,
     autorizacionUrl: process.env.AUTORIZACION_URL,
     consultPreOpe: process.env.CONSULT_PRE_OPE,
+    ituranUser: process.env.ITURAN_USER,
+    ituranPassword: process.env.ITURAN_PASSWORD,
+    ituranCompany: process.env.ITURAN_COMPANY,
+    ituranUrl: process.env.ITURAN_URL,
 }
 
 module.exports = { config }
