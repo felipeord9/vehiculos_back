@@ -16,7 +16,7 @@ router
   .get('/user/:username', PreOperationalController.findAllByUsername)
   .get('/cedula/:cedula', PreOperationalController.findByCedula)
   .post('/', PreOperationalController.createRecord)
-  .patch('/:id', checkRoles("admin"), PreOperationalController.updateRecord)
-  .delete('/id/:id', checkRoles("admin"), PreOperationalController.deleteRecord)
+  .patch('/:id', checkRoles("admin", "jefe"), PreOperationalController.updateRecord)
+  .delete('/id/:id', checkRoles("admin", "jefe"), PreOperationalController.deleteRecord)
 
 module.exports = router

@@ -14,8 +14,8 @@ router
   .get('/:id', DriverController.findOneDriver)
   .get('/cedula/:cedula', DriverController.findByCedula)
   .get('/agencia/:co', DriverController.findByCo)
-  .post('/', checkRoles("admin"), DriverController.createDriver)
-  .patch('/:id', checkRoles("admin"), DriverController.updateDriver)
-  .delete('/id/:id', checkRoles("admin"), DriverController.deleteDriver)
+  .post('/', checkRoles("admin", "jefe"), DriverController.createDriver)
+  .patch('/:id', checkRoles("admin", "jefe"), DriverController.updateDriver)
+  .delete('/id/:id', checkRoles("admin", "jefe"), DriverController.deleteDriver)
 
 module.exports = router
