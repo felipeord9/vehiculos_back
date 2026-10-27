@@ -47,6 +47,19 @@ const findByUsername = async (username) => {
   return user
 }
 
+const findBossOfTheAgency = async (destiny) => {
+  const user = await models.User.findOne({
+    where: {
+      role: 'jefe',
+      co: destiny
+    }
+  })
+
+  if(!user) throw boom.notFound('Usuario no encontrado')
+
+  return user
+}
+
 const create = async (data) => {
   const hash = bcrypt.hashSync(data.password, 10)
   const newUser = await models.User.create({
@@ -79,6 +92,7 @@ module.exports = {
   findOne,
   findByEmail,
   findByUsername,
+  findBossOfTheAgency,
   create,
   update,
   remove

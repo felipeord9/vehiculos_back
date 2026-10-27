@@ -1,5 +1,6 @@
 const mailService = require("../services/mailService");
 const agencyService = require("../services/agencyService");
+const userService = require("../services/userService");
 const { config } = require("../config/config");
 const nodemailer = require("nodemailer");
 
@@ -1206,8 +1207,10 @@ const sendMailNotCondition = async (req, res, next) => {
     const { body } = req;
 
     var agencia;
+    var destinoAgencia;
     if(body.co){
       agencia = await agencyService.findOneByRowId(body.co)
+      destinoAgencia = await userService.findBossOfTheAgency(body.co)
     }
 
     const transporter = await nodemailer.createTransport({
@@ -1223,8 +1226,8 @@ const sendMailNotCondition = async (req, res, next) => {
       {
         from: config.smtpEmail,
         //to: 'sistemas2@granlangostino.net',
-        to: 'mant.vehiculos@granlangostino.net, admonfinanciera@granlangostino.com, saludocupacional@granlangostino.com',
-        cc: 'administrador@granlangostino.com, coordinador.vehiculos@granlangostino.net',
+        to: 'mant.vehiculos@granlangostino.net, admonfinanciera@granlangostino.com, saludocupacional@granlangostino.com, administrador@granlangostino.com, coordinador.vehiculos@granlangostino.net',
+        cc: `${destinoAgencia && destinoAgencia.email}`,
         subject: "¡LIMITACIÓN DE CONDUCTOR!",
         html: `
         <!DOCTYPE html>
@@ -1344,6 +1347,8 @@ const sendMailNotCondition = async (req, res, next) => {
                         <br/>
                       <p><strong>ID:</strong> ${body.rowId !== null && body.rowId}</p>
                       <p><strong>Nombre:</strong> ${body.driver !== null && body.driver}</p>
+                      <p><strong>Placa:</strong> ${body.plate !== null && body.plate}</p>
+                      <p><strong>Tipo de Vehículo:</strong> ${body.typeVehicle !== null && body.typeVehicle}</p>
                       <p><strong>Agencia:</strong> ${agencia ? `${agencia.rowId} - ${agencia.description}` : body.co !== null && body?.co}</p>
                       <p><strong>Resumen de la limitación:</strong> ${body.diagnosis !== null && body?.diagnosis}</p>
                       <p><strong>Fecha creación:</strong> ${new Date(body.createdAt).toLocaleString("es-CO")}</p>
@@ -1416,7 +1421,7 @@ const sendMailNotCondition = async (req, res, next) => {
 const sendMailNews = async (req, res, next) => {
   try {
     // Extraemos la información del req.body
-    const { novedades = {}, infoDriver = {} } = req.body;
+    const { novedades = {}, infoDriver = {}, destiny } = req.body;
 
     // Validamos si novedades es un arreglo o un objeto para recorrerlo correctamente
     const listaNovedades = Array.isArray(novedades) 
@@ -1448,6 +1453,11 @@ const sendMailNews = async (req, res, next) => {
       agencia = await agencyService.findOneByRowId(infoDriver.co)
     }
 
+    var destinoAgencia;
+    if(destiny){
+      destinoAgencia = await userService.findBossOfTheAgency(destiny)
+    }
+
     const transporter = await nodemailer.createTransport({
       host: config.smtpHost,
       port: config.smtpPort,
@@ -1462,8 +1472,8 @@ const sendMailNews = async (req, res, next) => {
       {
         from: config.smtpEmail,
         //to: 'sistemas2@granlangostino.net',
-        to: 'mant.vehiculos@granlangostino.net, admonfinanciera@granlangostino.com, saludocupacional@granlangostino.com',
-        cc: 'administrador@granlangostino.com, coordinador.vehiculos@granlangostino.net',
+        to: 'mant.vehiculos@granlangostino.net, admonfinanciera@granlangostino.com, saludocupacional@granlangostino.com, administrador@granlangostino.com, coordinador.vehiculos@granlangostino.net',
+        cc: `${destinoAgencia && destinoAgencia.email}`,
         subject: "¡NOTIFICACIÓN DE NOVEDADES!",
         html: `
         <!DOCTYPE html>
@@ -1559,6 +1569,8 @@ const sendMailNews = async (req, res, next) => {
                 <br/>
                 <p><strong>ID:</strong> ${infoDriver.rowId || 'N/A'}</p>
                 <p><strong>Nombre:</strong> ${infoDriver.driver || 'N/A'}</p>
+                <p><strong>Placa:</strong> ${infoDriver.plate !== null && infoDriver.plate}</p>
+                <p><strong>Tipo de Vehículo:</strong> ${infoDriver.typeVehicle !== null && infoDriver.typeVehicle}</p>
                 <p><strong>Agencia / Centro de Operaciones:</strong> ${agencia ? `${agencia.rowId} - ${agencia.description}` : infoDriver.co || 'N/A'}</p>
                 <p><strong>Fecha de reporte:</strong> ${new Date().toLocaleString("es-CO")}</p>
               </div>
