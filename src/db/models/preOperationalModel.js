@@ -225,7 +225,32 @@ const PreOperationalSchema = {
   firmaJefe: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
-  }
+  },
+  motorThermo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'motor_thermo',
+  },
+  temperaturaThermo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'temperatura_thermo',
+  },
+  novedadesMotor: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'novedades_motor',
+  },
+  novedadesLatoneria: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'novedades_latoneria',
+  },
+  kitCarretera: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'kit_carretera',
+  },
 };
 
 class PreOperational extends Model {
