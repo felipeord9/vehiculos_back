@@ -3,6 +3,7 @@ const { Vehicle, VehicleSchema } = require('./vehiclesModel')
 const { Driver, DriverSchema } = require('./driverModel')
 const { PreOperational, PreOperationalSchema } = require('./preOperationalModel')
 const { Agency, AgencySchema } = require('./AgencyModel')
+const { Notification, NotificationSchema } = require('./notificationModel')
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize))
@@ -10,12 +11,14 @@ function setupModels(sequelize) {
   Driver.init(DriverSchema, Driver.config(sequelize))
   PreOperational.init(PreOperationalSchema, PreOperational.config(sequelize))
   Agency.init(AgencySchema, Agency.config(sequelize))
+  Notification.init(NotificationSchema, Notification.config(sequelize))
 
   User.associate(sequelize.models)
   Vehicle.associate(sequelize.models)
   Driver.associate(sequelize.models)
   PreOperational.associate(sequelize.models)
   Agency.associate(sequelize.models)
+  Notification.associate(sequelize.models)
 
 }
 

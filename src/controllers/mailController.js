@@ -1573,6 +1573,9 @@ const sendMailNews = async (req, res, next) => {
                 <p><strong>Tipo de Vehículo:</strong> ${infoDriver.typeVehicle !== null && infoDriver.typeVehicle}</p>
                 <p><strong>Agencia / Centro de Operaciones:</strong> ${agencia ? `${agencia.rowId} - ${agencia.description}` : infoDriver.co || 'N/A'}</p>
                 <p><strong>Fecha de reporte:</strong> ${new Date().toLocaleString("es-CO")}</p>
+                ${infoDriver.fallas === 'SI' &&
+                  `<p><strong>Resumen fallas reportadas:</strong> ${(infoDriver.resumenFallas !== null || infoDriver.resumenFallas !== '') && infoDriver.resumenFallas}</p>`
+                }
               </div>
 
               <!-- Tabla estructurada con las novedades -->

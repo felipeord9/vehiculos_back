@@ -5,10 +5,18 @@ const bodyParser = require('body-parser')
 const routerApi = require("./v1/routes");
 const { errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/errorHandler')
 const { config } = require("./config/config");
+const cron = require('node-cron');
+const NotificationController = require('../src/controllers/notificationController')
 
 const { port, host } = config;
 
 const app = express();
+
+// Ejecutar todos los días a las 9:00 AM
+cron.schedule("0 9 * * *", () => {
+  console.log('⏰ Ejecutando creación automática de notificaciones...');
+  NotificationController.rutinaCrearNotificaciones();
+});
 
 // Se declaran las opciones de cors
 /* let corsOptions = {

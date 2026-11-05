@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom')
 const { models } = require("../libs/sequelize");
+const { Op, Sequelize } = require("sequelize");
 
 const find = async () => {
   const records = await models.PreOperational.findAll({
@@ -10,6 +11,58 @@ const find = async () => {
   });
   return records;
 };
+
+const findRecordsToday = async () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const dateStr = `${year}-${month}-${day}`;
+
+  const records = await models.PreOperational.findAll({
+    order: [["id", "DESC"]],
+    include: [
+      "agency",
+    ],
+    where: {
+      createdAt: {
+        [Op.between]: [
+          Sequelize.literal(`'${dateStr} 00:00:00'`),
+          Sequelize.literal(`'${dateStr} 23:59:59'`)
+        ]
+      }
+    }
+  });
+  return records;
+};
+
+const findRecordsTodayByCo = async (co) => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const dateStr = `${year}-${month}-${day}`;
+
+  const records = await models.PreOperational.findAll({
+    order: [["id", "DESC"]],
+    include: [
+      "agency",
+    ],
+    where: {
+      createdAt: {
+        [Op.between]: [
+          Sequelize.literal(`'${dateStr} 00:00:00'`),
+          Sequelize.literal(`'${dateStr} 23:59:59'`)
+        ]
+      },
+      co: co
+    }
+  });
+  return records;
+};
+
 
 const findOne = async (id) => {
   const record = await models.PreOperational.findByPk(id);
@@ -91,6 +144,8 @@ module.exports = {
   findBy,
   findByAgency,
   findByUsername,
+  findRecordsToday,
+  findRecordsTodayByCo,
   create,
   update,
   remove,
