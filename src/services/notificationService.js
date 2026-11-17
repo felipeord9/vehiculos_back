@@ -10,6 +10,54 @@ const find = () => {
   return notificaciones
 }
 
+const findVencimientosToday = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const dateStr = `${year}-${month}-${day}`;
+
+  const vencimientos = models.Notification.findAll({
+    order: [["id", "DESC"]],
+    where: {
+      fechaNotificacion: {
+        [Op.between]: [
+          Sequelize.literal(`'${dateStr} 00:00:00'`),
+          Sequelize.literal(`'${dateStr} 23:59:59'`)
+        ]
+      },
+      concept: 'vencimiento'
+    }
+  })
+
+  return vencimientos
+}
+const findVencimientosByCoToday = (co) => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const dateStr = `${year}-${month}-${day}`;
+
+  const vencimientos = models.Notification.findAll({
+    order: [["id", "DESC"]],
+    where: {
+      fechaNotificacion: {
+        [Op.between]: [
+          Sequelize.literal(`'${dateStr} 00:00:00'`),
+          Sequelize.literal(`'${dateStr} 23:59:59'`)
+        ]
+      },
+      concept: 'vencimiento',
+      co: co
+    }
+  })
+
+  return vencimientos
+}
+
 const findCo = (co) => {
   const notificaciones = models.Notification.findAll({
     limit: 500,
@@ -130,6 +178,8 @@ module.exports = {
   findByDay,
   findDayByCo,
   findByHuella,
+  findVencimientosToday,
+  findVencimientosByCoToday,
   create,
   update,
   agregarNombre,

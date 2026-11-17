@@ -158,6 +158,37 @@ const findPendientesTodayByCo = async (req, res, next) => {
 };
 ///////
 
+//funcion para hallar los prontos a vencimiento
+const findVencimientoToday = async (req, res, next) => {
+  try {
+    const data = await NotificationService.findVencimientosToday();
+
+    res.status(200).json({
+      message: "OK",
+      data,
+    });
+  } catch (error) {
+    console.log(error)
+    next(error);
+  }
+};
+const findVencimientoTodayByCo = async (req, res, next) => {
+  const { params: { co } } = req
+  try {
+    //buscamos notificaciones globales del dia por co
+    const data = await NotificationService.findVencimientosByCoToday(co);
+
+    res.status(200).json({
+      message: "OK",
+      data
+    });
+  } catch (error) {
+    console.log(error)
+    next(error);
+  }
+};
+/////////
+
 //rutinas para crear las notificaciones
 async function rutinaCrearNotificaciones() {
   try {
@@ -254,6 +285,8 @@ module.exports = {
   findTodaynotificationsByCo,
   findPendientesToday,
   findPendientesTodayByCo,
+  findVencimientoToday,
+  findVencimientoTodayByCo,
   updateNotification,
   agregarNombreControl,
   rutinaCrearNotificaciones,

@@ -13,6 +13,10 @@ router
   .get('/find/today/:co', NotificationController.findTodaynotificationsByCo)
   .get('/find/pendientes/today', NotificationController.findPendientesToday)
   .get('/find/pendientes/today/:co', NotificationController.findPendientesTodayByCo)
+
+  .get('/vencimientos/today', NotificationController.findVencimientoToday)
+  .get('/vencimientos/today/:co', NotificationController.findVencimientoTodayByCo)
+  
   .patch("/:id", NotificationController.updateNotification)
   .patch("/agregar/:id", NotificationController.agregarNombreControl)
   

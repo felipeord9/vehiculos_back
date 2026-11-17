@@ -7,6 +7,7 @@ const { errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewar
 const { config } = require("./config/config");
 const cron = require('node-cron');
 const NotificationController = require('../src/controllers/notificationController')
+const VehicleController = require('../src/controllers/vehicleController')
 
 const { port, host } = config;
 
@@ -17,6 +18,13 @@ cron.schedule("0 9 * * *", () => {
   console.log('⏰ Ejecutando creación automática de notificaciones...');
   NotificationController.rutinaCrearNotificaciones();
 });
+
+// ejecutar para validar vencimiento todos los dias a las 4:00 AM
+cron.schedule("0 4 * * *", () => {
+  console.log('⏰ Ejecutando creación automática de notificaciones...');
+  VehicleController.rutinaAllVecimiento();
+});
+
 
 // Se declaran las opciones de cors
 /* let corsOptions = {
